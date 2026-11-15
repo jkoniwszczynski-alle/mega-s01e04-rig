@@ -94,8 +94,9 @@ Done when: the preview link no longer shows the lane marker.
 
 All workers inherited their models; exact model identifiers were not disclosed.
 
-#7 was closed only after the review was confirmed. The user separately approved marker removal.
-#8 public cleanup was verified by the user on 2026-11-15 after workflow 43722095060 succeeded:
+After an early closure was rejected, #7 was reopened; its final closure followed confirmed review.
+The user separately approved marker removal.
+#8 public cleanup was verified by the coordinating agent on 2026-11-15 after workflow 43722095060 succeeded:
 GET https://jkoniwszczynski-alle.github.io/mega-s01e04-rig/ showed "no marker set" and no old marker.
-The user confirmed that the HTML was byte-identical to the previous version except for marker
+The agent confirmed that the HTML was byte-identical to the previous version except for marker
 replacement. Course acceptance of the full challenge has not been checked.
