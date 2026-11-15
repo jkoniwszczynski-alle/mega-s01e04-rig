@@ -30,7 +30,7 @@ function isEntry(value: unknown): value is LogEntry {
 }
 
 export const readNight: ReadNight = (runsDir, night) => {
-  if (!isDay(night)) throw new RangeError('night must be a valid YYYY-MM-DD date');
+  if (!isDay(night)) return null;
 
   let text: string;
   try {

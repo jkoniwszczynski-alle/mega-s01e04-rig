@@ -146,7 +146,7 @@ describe('readNight', () => {
     '2026-10-28\n', '2026-10-28\0', ' 2026-10-28', '2026-1-28',
     '2026-02-29', '2026-02-30', '2026-13-01', '2026-00-01', '2026-10-00', '',
   ])('rejects invalid night %j before reading', (invalid) => {
-    expect(() => readNight(runsDir, invalid)).toThrow(RangeError);
+    expect(readNight(runsDir, invalid)).toBeNull();
   });
 
   it('accepts a real leap day', () => {
