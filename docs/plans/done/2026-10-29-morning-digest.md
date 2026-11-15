@@ -99,4 +99,4 @@ The user separately approved marker removal.
 #8 public cleanup was verified by the coordinating agent on 2026-11-15 after workflow 43722095060 succeeded:
 GET https://jkoniwszczynski-alle.github.io/mega-s01e04-rig/ showed "no marker set" and no old marker.
 The agent confirmed that the HTML was byte-identical to the previous version except for marker
-replacement. Course acceptance of the full challenge has not been checked.
+replacement. The course accepted the full challenge on 2026-11-15.
