@@ -86,7 +86,8 @@ describe('digest routes', () => {
       // Column order and nested formatting are deliberately not part of the contract.
       expect(rows[index].cells).toEqual(expect.arrayContaining([
         row.job, row.owner ?? '—', String(row.runs), String(row.retries),
-        row.lastStatus, row.lastError ?? '—', row.firstAt, row.lastAt,
+        expect.stringMatching(new RegExp(`^${row.lastStatus}\\b`)),
+        row.lastError ?? '—', row.firstAt, row.lastAt,
       ]));
     }
   });
@@ -128,7 +129,9 @@ describe('digest routes', () => {
     ]);
     const rows = tableRows(html);
     expect(rows).toHaveLength(1);
-    expect(rows[0].cells).toContain(lastStatus);
+    expect(rows[0].cells).toEqual(expect.arrayContaining([
+      expect.stringMatching(new RegExp(`^${lastStatus}\\b`)),
+    ]));
     expect(text(rows[0].html)).toContain('upstream unavailable');
     expect(hasWarning(rows[0].html)).toBe(true);
   });
@@ -140,6 +143,33 @@ describe('digest routes', () => {
       expect(response.headers.get('content-type')).toMatch(/application\/json/i);
       expect(await response.json()).toEqual({ error: 'night not found' });
     }
+  });
+
+  it.each(['/digest', '/api/digest'])('returns 404, not 500, for an invalid night at %s', async (route) => {
+    const response = await app().request(`${route}/not-a-night`);
+    expect(response.status).toBe(404);
+    if (route === '/api/digest') {
+      expect(await response.json()).toEqual({ error: 'night not found' });
+    }
+  });
+
+  it('escapes job, owner and error as text without rendering an active script', async () => {
+    const entry = {
+      job: '<script>job()</script>',
+      owner: '<script>owner()</script>',
+      error: '<script>error()</script>',
+      status: 'fail',
+      at: '2026-10-28T02:00:00+01:00',
+    };
+    await writeNight([entry]);
+    const { digest, html } = await readRoutes();
+    expect(digest.rows).toEqual([
+      expect.objectContaining({ job: entry.job, owner: entry.owner, lastError: entry.error }),
+    ]);
+    for (const value of [entry.job, entry.owner, entry.error]) {
+      expect(html).toContain(value.replaceAll('<', '&lt;').replaceAll('>', '&gt;'));
+    }
+    expect(html).not.toMatch(/<script\b/i);
   });
 
   it('serves an empty night as 200 with nothing ran, not as a missing night', async () => {
@@ -167,7 +197,9 @@ describe('digest routes', () => {
     } satisfies NightDigest);
     const rows = tableRows(html);
     expect(rows).toHaveLength(1);
-    expect(rows[0].cells).toEqual(expect.arrayContaining([entry.job, '—', '2', '1', 'ok', entry.at, later.at]));
+    expect(rows[0].cells).toEqual(expect.arrayContaining([
+      entry.job, '—', '2', '1', expect.stringMatching(/^ok\b/), entry.at, later.at,
+    ]));
     expect(text(html)).not.toContain('BROKEN-LINE');
   });
 });
