@@ -12,6 +12,8 @@ const css = `
   header .marker { margin-left: auto; color: var(--mute); }
   main { padding: 1.25rem; max-width: 60rem; }
   table { border-collapse: collapse; width: 100%; }
+  .table-scroll { overflow-x: auto; }
+  .table-scroll > table { min-width: 60rem; }
   th, td { text-align: left; padding: .35rem .75rem .35rem 0; border-bottom: 1px solid var(--line); }
   th { color: var(--mute); font-weight: normal; }
   .warn { color: var(--warn); }

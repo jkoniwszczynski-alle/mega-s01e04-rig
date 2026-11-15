@@ -8,37 +8,39 @@ export function DigestPage({ digest }: { digest: NightDigest }) {
       {digest.rows.length === 0 ? (
         <p class="mute">nothing ran</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">job</th>
-              <th scope="col">owner</th>
-              <th scope="col">runs</th>
-              <th scope="col">retries</th>
-              <th scope="col">last status</th>
-              <th scope="col">last error</th>
-              <th scope="col">first time</th>
-              <th scope="col">last time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {digest.rows.map((row) => (
-              <tr class={row.retries >= 3 || row.failures > 0 ? 'warn' : undefined}>
-                <td>{row.job}</td>
-                <td>{row.owner ?? '—'}</td>
-                <td>{row.runs}</td>
-                <td>{row.retries}</td>
-                <td>
-                  {row.lastStatus}
-                  {row.failures > 0 && <span> · failed ({row.failures})</span>}
-                </td>
-                <td>{row.lastError ?? '—'}</td>
-                <td>{row.firstAt}</td>
-                <td>{row.lastAt}</td>
+        <div class="table-scroll" role="region" aria-label="Nightly digest jobs" tabindex={0}>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">job</th>
+                <th scope="col">owner</th>
+                <th scope="col">runs</th>
+                <th scope="col">retries</th>
+                <th scope="col">last status</th>
+                <th scope="col">last error</th>
+                <th scope="col">first time</th>
+                <th scope="col">last time</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {digest.rows.map((row) => (
+                <tr class={row.retries >= 3 || row.failures > 0 ? 'warn' : undefined}>
+                  <td>{row.job}</td>
+                  <td>{row.owner ?? '—'}</td>
+                  <td>{row.runs}</td>
+                  <td>{row.retries}</td>
+                  <td>
+                    {row.lastStatus}
+                    {row.failures > 0 && <span> · failed ({row.failures})</span>}
+                  </td>
+                  <td>{row.lastError ?? '—'}</td>
+                  <td>{row.firstAt}</td>
+                  <td>{row.lastAt}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </>
   );
