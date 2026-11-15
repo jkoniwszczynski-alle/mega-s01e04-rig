@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-11-15
 ---
 
 # Morning digest
@@ -77,3 +78,24 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | Dependencies |
+|---|-------|--------------|
+| 1 | [Kontrakt danych digestu](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/1) | — |
+| 2 | [Czytnik nocnego JSONL](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/2) | Blocked by #1 |
+| 3 | [Strona HTML: GET /digest/:night](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/3) | Started after #1; integration with #2 |
+| 4 | [Endpoint JSON: GET /api/digest/:night](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/4) | Started after #1; integration with #2 |
+| 5 | [Linki do digestów na tablicy statusu](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/5) | Started after #1; integration with #2 |
+| 6 | [Testy tras digestu](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/6) | Started after #1; integration with #2 |
+| 7 | [Publiczny podgląd HTML do recenzji](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/7) | Review after #2–6 |
+| 8 | [Sprzątanie podglądu po otrzymaniu recenzji](https://github.com/jkoniwszczynski-alle/mega-s01e04-rig/issues/8) | After confirmed review and explicit user approval |
+
+All workers inherited their models; exact model identifiers were not disclosed.
+
+#7 was closed only after the review was confirmed. The user separately approved marker removal.
+#8 public cleanup was verified by the user on 2026-11-15 after workflow 43722095060 succeeded:
+GET https://jkoniwszczynski-alle.github.io/mega-s01e04-rig/ showed "no marker set" and no old marker.
+The user confirmed that the HTML was byte-identical to the previous version except for marker
+replacement. Course acceptance of the full challenge has not been checked.
