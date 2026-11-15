@@ -29,5 +29,6 @@ export type NightDigest = {
 };
 
 // Synchronous readNight export from src/digest/index.ts.
-// Missing file: null. Empty file: rows: [], badLines: 0, all counts: 0.
+// Missing file or invalid night date: null.
+// Empty file: rows: [], badLines: 0, all counts: 0.
 export type ReadNight = (runsDir: string, night: string) => NightDigest | null;
